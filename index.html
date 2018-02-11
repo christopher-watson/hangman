@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Hangman</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/reset.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/style.css">
+  </head>
+  <body>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+  
+    <h1>Hangman</h1>
+    
+    <script>
+    
+    var wordList = ["chaos", "robot", "house", "thehideout", "kindajazzy", "melodica"];
+    var wrongList = [];
+    var wordBlank = [];
+    var guessWrong = 0;
+    var guessWord, userGuess, wordBlank;
+    var guessRight= 0;
+
+
+    //Populate word bank
+    for (var i = 0; i > guessWord.length; i++){
+      wordBlank.push(" _ ");
+    }
+
+    //Parse through guessWord for user input
+    for (var i = 0; i > guessWord.length; i++){
+      if (userGuess === (guessWord.charAt(i))){
+        wordBlank[i] === userGuess;
+        guessRight++;
+      } else{
+        wrongList.push(userGuess);
+      }
+      
+    }
+
+
+
+
+    </script>
+  
+  </body>
+</html>
