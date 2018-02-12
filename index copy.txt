@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Hangman</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/reset.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/style.css">
+  </head>
+  <body>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+  
+    <h1>Hangman</h1>
+    
+    letter typed: <span id="input">BLANK</span>
+    <br>
+    array of letters typed: <span id="lettersTyped">BLANK</span>
+
+    <script type="text/javascript">
+    
+    // ["chaos", "robot", "house", "thehideout", "kindajazzy", "melodica"];
+    var wordList = [
+      ["c", "h", "a", "o", "s"],
+      ["r", "o", "b", "o", "t", ],
+      ["h", "o", "u", "s", "e", ],
+      ["t", "h", "e", "h", "i", "d", "e", "o", "u", "t", ],
+      ["k", "i", "n", "d", "a", "j", "a", "z", "z", "y", ],
+      ["m", "e", "l", "o", "d", "i", "c", "a", ]
+    ]
+    var wrongList = [];
+    var wordBlank = [];
+    var guessWrong = 0;
+    var guessWord, userGuess, wordBlank;
+    var guessRight= 0;
+    var game = true;
+    var testArray = [];
+
+
+
+    //Get user input
+    userGuess = document.getElementById("input");
+      console.log(userGuess);
+      console.dir(userGuess);
+    document.onkeyup = function(event) {
+      console.log(event);
+      userGuess.textContent = event.key;
+    };
+
+    //Add input to an array
+    // function addWrong()
+    // testArray.push(userGuess);
+    // console.log(testArray);
+    
+
+    //Populate word blank
+    for (var i = 0; i > guessWord.length; i++){
+      wordBlank[i] = " _ ";
+    }
+
+    //Parse through guessWord for user input
+    for (var i = 0; i > guessWord.length; i++){
+      if (userGuess === (guessWord.charAt(i))){
+        wordBlank[i] === userGuess;
+        guessRight++;
+      } else{
+        wrongList.push(userGuess);
+      }
+      
+    }
+
+
+
+
+    </script>
+  
+  </body>
+</html>
