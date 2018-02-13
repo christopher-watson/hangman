@@ -11,10 +11,10 @@
 
   <div class="jumbotron-fluid bg-dark text-light h-100">
     <div class="container">
-      <div class="row align-items-center justify-content-center" style="height:70vh">
+      <div class="row align-items-center justify-content-center" style="height:30vh">
         <div class="col-12 col-sm-10 col-md-8 text-center">
           <h1>Hangman</h1>
-          <button class="btn btn-success py-2 mt-2" id="reset-button">New Game</button>
+          <button class="btn btn-success py-2 mt-2" id="restart-button">New Game</button>
         </div>
       </div>
     </div>
@@ -26,9 +26,9 @@
         <div class="card">
           <div class="card-header"></div>
           <div class="card-body">
-            <h5 class="card-title">Wins<span id="car-action"></span></h5>
+            <h5 class="card-title">Lives<span id="life-box"></span></h5>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item"><span id="wins"></span>
+              <li class="list-group-item"><span id="lives"></span>
               </li>
             </ul>
           </div>
@@ -38,9 +38,9 @@
         <div class="card">
           <div class="card-header bg-primary"></div>
           <div class="card-body">
-            <h5 class="card-title">Mystery Word<span id="car-action"></span></h5>
+            <h5 class="card-title">Mystery Word<span id="word-box"></span></h5>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item"><span id="car-make"></span></li>
+              <li class="list-group-item"><span id="mystery-word"></span></li>
             </ul>
           </div>
         </div>
@@ -49,9 +49,9 @@
           <div class="card">
             <div class="card-header"></div>
             <div class="card-body">
-              <h5 class="card-title">Letters Guessed<span id="car-action"></span></h5>
+              <h5 class="card-title">Letters Guessed<span id="letter-box"></span></h5>
               <ul class="list-group list-group-flush">
-                <li class="list-group-item"><span id="car-make"></span></li>
+                <li class="list-group-item"><span id="letters-guessed"></span></li>
               </ul>
             </div>
           </div>
@@ -64,7 +64,7 @@
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <script src="./assets/js/script.js"></script>
+  <script src="./assets/script.js"></script>
 
 </body>
 
