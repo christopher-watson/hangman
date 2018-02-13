@@ -43,7 +43,7 @@ var hangman = {
   
     var input = event.key;
     
-    hangman.wrongLet(event);
+    hangman.wrongLet(input);
     console.log("doc " + wrongList);
   
   }
