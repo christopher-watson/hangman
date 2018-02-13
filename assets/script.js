@@ -6,8 +6,8 @@ var newGameButton = document.getElementById('new-game-button');
 
 //var guessWrong;
 var wordList = ["chaos", "robot", "house", "thehideout", "kindajazzy", "melodica"];
-var wrongList = [];
-var wordBlank = [];
+var wrongList = ["-"];
+// var wordBlank = [];
 var randWord;
 var count = 0;
 
@@ -16,14 +16,15 @@ var count = 0;
 var hangman = {
   gameOver: false,
   guessWrong: 10,
-  // count: 0,
+  wordBlank: [],
+
   //select a word from list
   currWord: function(){
     randWord = wordList[Math.floor(Math.random() * wordList.length)];
       console.log(randWord);
     for (var i = 0; i < randWord.length; i++){
-    wordBlank[i] = "_";
-    mysteryWordHtml.textContent = wordBlank.join(" ");
+    this.wordBlank[i] = "_";
+    mysteryWordHtml.textContent = this.wordBlank.join(" ");
     };
   },
 
@@ -42,24 +43,28 @@ var hangman = {
   replaceLet: function(a){
     for(var i = 0; i < randWord.length; i++){
       if (randWord[i] === a){
-        wordBlank.splice(i, 1, a);
+        this.wordBlank.splice(i, 1, a);
       }
     }
-    mysteryWordHtml.textContent = wordBlank.join(" ")
+    mysteryWordHtml.textContent = this.wordBlank.join(" ")
   },
 
   newGame: function(){
     this.guessWrong = 10;
     count = 0;
     this.gameOver = false;
+    livesHtml.textContent = this.guessWrong;
+    this.wordBlank = [];
+
   },
 
 };
 
   hangman.currWord();
-  mysteryWordHtml.textContent = wordBlank.join(" ");
+  mysteryWordHtml.textContent = hangman.wordBlank.join(" ");
   livesHtml.textContent = hangman.guessWrong;
-  alert(randWord);
+  lettersGuessedHtml.textContent = wrongList;
+  
 
   document.onkeyup = function(event){
     console.log(event);
@@ -69,7 +74,7 @@ var hangman = {
     if(input.match(/[a-z]/i) && input.length ===1){ 
       if(randWord.includes(input)){
         hangman.replaceLet(input);
-        console.log("replaceLet " + wordBlank);
+        console.log("replaceLet " + hangman.wordBlank);
       }
     
       else if(!randWord.includes(input)){
