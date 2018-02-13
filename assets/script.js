@@ -4,7 +4,7 @@ var mysteryWordHtml = document.getElementById('mystery-word');
 var lettersGuessedHtml = document.getElementById('letters-guessed');
 var newGameButton = document.getElementById('new-game-button');
 
-var guessWrong = 10;
+//var guessWrong;
 var wordList = ["chaos", "robot", "house", "thehideout", "kindajazzy", "melodica"];
 var wrongList = [];
 var wordBlank = [];
@@ -15,7 +15,8 @@ var count = 0;
 //hangman object
 var hangman = {
   gameOver: false,
-
+  guessWrong: 10,
+  // count: 0,
   //select a word from list
   currWord: function(){
     randWord = wordList[Math.floor(Math.random() * wordList.length)];
@@ -27,9 +28,15 @@ var hangman = {
   },
 
   wrongLet: function(a){
-    wrongList.splice(count, 1, a);
-    count++;
+    if(!wrongList.includes(a)){
+      wrongList.splice(count, 1, a);
+    count++; //keeps counter of wrongLetter array index
     lettersGuessedHtml.textContent = wrongList.join(" ");
+    this.guessWrong--;
+    livesHtml.textContent = this.guessWrong;
+    console.log("function " + this.guessWrong);
+    };
+    
   },
 
   replaceLet: function(a){
@@ -42,27 +49,36 @@ var hangman = {
   },
 
   newGame: function(){
-    guessWrong = 10;
+    this.guessWrong = 10;
     count = 0;
     this.gameOver = false;
+  },
 
-  }
 };
 
   hangman.currWord();
   mysteryWordHtml.textContent = wordBlank.join(" ");
-  livesHtml.textContent = guessWrong;
+  livesHtml.textContent = hangman.guessWrong;
+  alert(randWord);
 
   document.onkeyup = function(event){
     console.log(event);
   
     var input = event.key;
+  
+    if(input.match(/[a-z]/i) && input.length ===1){ 
+      if(randWord.includes(input)){
+        hangman.replaceLet(input);
+        console.log("replaceLet " + wordBlank);
+      }
     
-    hangman.wrongLet(input);
-    console.log("wrongLet " + wrongList);
+      else if(!randWord.includes(input)){
+        hangman.wrongLet(input);
+        console.log("wrongLet " + wrongList);
+      };
+    
+    };
 
-    hangman.replaceLet(input);
-    console.log("replaceLet " + wordBlank);
   };
 
   newGameButton.addEventListener('click', hangman.newGame);
