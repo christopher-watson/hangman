@@ -18,7 +18,7 @@ for (var i = 0; i < randWord.length; i++){
 
 var wrongList = [];
 
-// var input;
+var count = 0;
 
 //hangman object
 var hangman = {
@@ -29,25 +29,31 @@ var hangman = {
   },
 
   wrongLet: function(a){
+    wrongList.splice(count, 1, a);
+    count++;lettersGuessedHtml.textContent = wrongList.join(" ");
+  }
+
+//adds letters to array at wrong location
+/*
+  wrongLet: function(a){
     wrongList.push(a);
-    console.log("function " + wrongList)
-  },
+    lettersGuessedHtml.textContent = wrongList.join("");
+  }
+*/
 };
 
   mysteryWordHtml.textContent = wordBlank.join(" ");
+  
   livesHtml.textContent = guessWrong;
-  lettersGuessedHtml.textContent = wrongList;
+
 
   document.onkeyup = function(event){
     console.log(event);
   
     var input = event.key;
     
+    wrongList.push(document.getElementById(input)); 
+
     hangman.wrongLet(input);
-    console.log("doc " + wrongList);
-  
-  }
-
-  // console.log(wrongList);
-
-  
+    console.log("wrongLet " + wrongList);
+  };
