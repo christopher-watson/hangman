@@ -2,23 +2,15 @@
 var livesHtml = document.getElementById('lives');
 var mysteryWordHtml = document.getElementById('mystery-word');
 var lettersGuessedHtml = document.getElementById('letters-guessed');
-var newGame = document.getElementById('restart-button');
+var newGameButton = document.getElementById('new-game-button');
 
 var guessWrong = 10;
-
 var wordList = ["chaos", "robot", "house", "thehideout", "kindajazzy", "melodica"];
-
-var randWord = wordList[Math.floor(Math.random() * wordList.length)];
-console.log(randWord);
-
-var wordBlank = [];
-for (var i = 0; i < randWord.length; i++){
-  wordBlank[i] = "_";
-};
-
 var wrongList = [];
-
+var wordBlank = [];
+var randWord;
 var count = 0;
+
 
 //hangman object
 var hangman = {
@@ -26,6 +18,12 @@ var hangman = {
 
   //select a word from list
   currWord: function(){
+    randWord = wordList[Math.floor(Math.random() * wordList.length)];
+      console.log(randWord);
+    for (var i = 0; i < randWord.length; i++){
+    wordBlank[i] = "_";
+    mysteryWordHtml.textContent = wordBlank.join(" ");
+    };
   },
 
   wrongLet: function(a){
@@ -34,13 +32,6 @@ var hangman = {
     lettersGuessedHtml.textContent = wrongList.join(" ");
   },
 
-//adds letters to array at wrong location
-/*
-  wrongLet: function(a){
-    wrongList.push(a);
-    lettersGuessedHtml.textContent = wrongList.join("");
-  }
-*/
   replaceLet: function(a){
     for(var i = 0; i < randWord.length; i++){
       if (randWord[i] === a){
@@ -49,10 +40,17 @@ var hangman = {
     }
     mysteryWordHtml.textContent = wordBlank.join(" ")
   },
+
+  newGame: function(){
+    guessWrong = 10;
+    count = 0;
+    this.gameOver = false;
+
+  }
 };
 
+  hangman.currWord();
   mysteryWordHtml.textContent = wordBlank.join(" ");
-  
   livesHtml.textContent = guessWrong;
 
   document.onkeyup = function(event){
@@ -66,3 +64,5 @@ var hangman = {
     hangman.replaceLet(input);
     console.log("replaceLet " + wordBlank);
   };
+
+  newGameButton.addEventListener('click', hangman.newGame);
