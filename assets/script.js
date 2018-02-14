@@ -22,9 +22,19 @@ var hangman = {
   count: 0,
   randWord: [""],
   newWord: [""],
+  currWord: 
   
 
   //select a word from list
+  newWord: function(){
+    this.randWord = this.wordList[Math.floor(Math.random() * this.wordList.length)];
+      console.log("currWord" + this.randWord);
+    for (var i = 0; i < this.randWord.length; i++){
+    this.wordBlank[i] = "_";
+    mysteryWordHtml.textContent = this.wordBlank.join(" ");
+  };
+  },
+
   currWord: function(){
     //console.log(this.wordList.length);
     this.randWord = this.wordList[Math.floor(Math.random() * this.wordList.length)];
@@ -63,7 +73,7 @@ var hangman = {
     // this.gameOver = false;
     this.wordBlank = [""];
     this.wrongList = ["-"];
-    this.randWord = [""];
+    this.randWord = this.currWord;
     livesHtml.textContent = this.guessWrong;
     lettersGuessedHtml.textContent = this.wrongList;
     mysteryWordHtml.textContent = this.wordBlank.join(" ");
@@ -81,12 +91,12 @@ var hangman = {
     var input = event.key;
   
     if(input.match(/[a-z]/i) && input.length === 1){ 
-      if(hangman.currWord.includes(input)){
+      if(hangman.randWord.includes(input)){
         hangman.replaceLet(input);
         console.log("replaceLet " + hangman.wordBlank);
       }
     
-      else if(!hangman.currWord.includes(input)){
+      else if(!hangman.randWord.includes(input)){
         hangman.wrongLet(input);
         console.log("wrongLet " + hangman.wrongList);
       };
