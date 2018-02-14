@@ -5,81 +5,90 @@ var lettersGuessedHtml = document.getElementById('letters-guessed');
 var newGameButton = document.getElementById('new-game-button');
 
 //var guessWrong;
-var wordList = ["chaos", "robot", "house", "thehideout", "kindajazzy", "melodica"];
-var wrongList = ["-"];
+// var wordList = ["chaos", "robot", "house", "thehideout", "kindajazzy", "melodica"];
+// var wrongList = ["-"];
 // var wordBlank = [];
-var randWord;
-var count = 0;
+// var randWord;
+// var count = 0;
 
 
 //hangman object
 var hangman = {
-  gameOver: false,
+  wordList: ["chaos", "robot", "house", "thehideout", "kindajazzy", "melodica"],
+  // gameOver: false,
   guessWrong: 10,
-  wordBlank: [],
+  wordBlank: [""],
+  wrongList: ["-"],
+  count: 0,
+  randWord: [""],
+  newWord: [""],
+  
 
   //select a word from list
   currWord: function(){
-    randWord = wordList[Math.floor(Math.random() * wordList.length)];
-      console.log(randWord);
-    for (var i = 0; i < randWord.length; i++){
+    //console.log(this.wordList.length);
+    this.randWord = this.wordList[Math.floor(Math.random() * this.wordList.length)];
+      console.log("currWord" + this.randWord);
+    for (var i = 0; i < this.randWord.length; i++){
     this.wordBlank[i] = "_";
     mysteryWordHtml.textContent = this.wordBlank.join(" ");
     };
   },
 
   wrongLet: function(a){
-    if(!wrongList.includes(a)){
-      wrongList.splice(count, 1, a);
-    count++; //keeps counter of wrongLetter array index
-    lettersGuessedHtml.textContent = wrongList.join(" ");
-    this.guessWrong--;
-    livesHtml.textContent = this.guessWrong;
-    console.log("function " + this.guessWrong);
+    if(!this.wrongList.includes(a)){
+      this.wrongList.splice(this.count, 1, a);
+      this.count++; //keeps counter of wrongLetter array index
+      lettersGuessedHtml.textContent = this.wrongList.join(" ");
+      this.guessWrong--;
+      livesHtml.textContent = this.guessWrong;
+      console.log("function " + this.guessWrong);
     };
     
   },
 
   replaceLet: function(a){
-    for(var i = 0; i < randWord.length; i++){
-      if (randWord[i] === a){
+    for(var i = 0; i < this.randWord.length; i++){
+      if (this.randWord[i] === a){
         this.wordBlank.splice(i, 1, a);
       }
     }
-    mysteryWordHtml.textContent = this.wordBlank.join(" ")
+    mysteryWordHtml.textContent = this.wordBlank.join(" ");
   },
 
   newGame: function(){
+    this.wordList = ["chaos", "robot", "house", "thehideout", "kindajazzy", "melodica"];
     this.guessWrong = 10;
-    count = 0;
-    this.gameOver = false;
+    this.count = 0;
+    // this.gameOver = false;
+    this.wordBlank = [""];
+    this.wrongList = ["-"];
+    this.randWord = [""];
     livesHtml.textContent = this.guessWrong;
-    this.wordBlank = [];
-
+    lettersGuessedHtml.textContent = this.wrongList;
+    mysteryWordHtml.textContent = this.wordBlank.join(" ");
   },
-
 };
 
   hangman.currWord();
   mysteryWordHtml.textContent = hangman.wordBlank.join(" ");
   livesHtml.textContent = hangman.guessWrong;
-  lettersGuessedHtml.textContent = wrongList;
+  lettersGuessedHtml.textContent = hangman.wrongList;
   
-
   document.onkeyup = function(event){
     console.log(event);
   
     var input = event.key;
   
-    if(input.match(/[a-z]/i) && input.length ===1){ 
-      if(randWord.includes(input)){
+    if(input.match(/[a-z]/i) && input.length === 1){ 
+      if(hangman.currWord.includes(input)){
         hangman.replaceLet(input);
         console.log("replaceLet " + hangman.wordBlank);
       }
     
-      else if(!randWord.includes(input)){
+      else if(!hangman.currWord.includes(input)){
         hangman.wrongLet(input);
-        console.log("wrongLet " + wrongList);
+        console.log("wrongLet " + hangman.wrongList);
       };
     
     };
@@ -87,3 +96,4 @@ var hangman = {
   };
 
   newGameButton.addEventListener('click', hangman.newGame);
+  newGameButton.addEventListener('click', hangman.currWord);
