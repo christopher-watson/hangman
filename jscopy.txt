@@ -1,3 +1,5 @@
+//WORKIKNG JS CODE
+
 //reference variables for DOM elements
 var livesHtml = document.getElementById('lives');
 var mysteryWordHtml = document.getElementById('mystery-word');
