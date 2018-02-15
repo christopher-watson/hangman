@@ -22,67 +22,66 @@ var hangman = {
   count: 0,
   randWord: [""],
   newWord: [""],
-  currWord: null,
+  currWord: [""],
+
   
 
-  //select a word from list
-  newWord: function(){
+  displayWord: function(){
+    //choose a word from list and display it on the screen
     this.randWord = this.wordList[Math.floor(Math.random() * this.wordList.length)];
-      console.log("newWord" + this.randWord);
+      console.log("displayWord - randWord: " + this.randWord);
     for (var i = 0; i < this.randWord.length; i++){
       this.wordBlank[i] = "_";
-      mysteryWordHtml.textContent = this.wordBlank.join(" ");
       };
     this.currWord = this.randWord;
-    console.log("currWord" + this.currWord)
+    mysteryWordHtml.textContent = this.wordBlank.join(" ");
+    console.log("displayWord - currWord: " + this.currWord)
   },
 
-  // currWord: function(){
-  //   //console.log(this.wordList.length);
-  //   this.randWord = this.wordList[Math.floor(Math.random() * this.wordList.length)];
-  //     console.log("currWord" + this.randWord);
-  //   for (var i = 0; i < this.randWord.length; i++){
-  //     this.wordBlank[i] = "_";
-  //     mysteryWordHtml.textContent = this.wordBlank.join(" ");
-  //     };
-  // },
-
-  wrongLet: function(a){
-    if(!this.wrongList.includes(a)){
+  guessLetter: function(a){
+    if(!this.currWord.includes(a)){
       this.wrongList.splice(this.count, 1, a);
       this.count++; //keeps counter of wrongLetter array index
       lettersGuessedHtml.textContent = this.wrongList.join(" ");
       this.guessWrong--;
       livesHtml.textContent = this.guessWrong;
-      console.log("function " + this.guessWrong);
+      console.log("guessLetter - guessWrong: " + this.guessWrong);
     };
-  },
 
-  replaceLet: function(a){
-    for(var i = 0; i < this.randWord.length; i++){
-      if (this.randWord[i] === a){
-        this.wordBlank.splice(i, 1, a);
+    if(this.randWord.includes(a)){
+      for(var i = 0; i < this.currWord.length; i++){
+        if (this.randWord[i] === a){
+          this.wordBlank.splice(i, 1, a);
+        };
       };
+      mysteryWordHtml.textContent = this.wordBlank.join(" ");
     };
-    mysteryWordHtml.textContent = this.wordBlank.join(" ");
   },
 
   newGame: function(){
     this.wordList = ["chaos", "robot", "house", "thehideout", "kindajazzy", "melodica"];
     this.guessWrong = 10;
-    this.count = 0;
-    // this.gameOver = false;
     this.wordBlank = [""];
     this.wrongList = ["-"];
-    this.currdWord = this.randWord;
-    livesHtml.textContent = this.guessWrong;
-    lettersGuessedHtml.textContent = this.wrongList;
-    mysteryWordHtml.textContent = this.wordBlank.join(" ");
+    this.count = 0;
+    this.randWord = [""];
+    this.newWord = [""];
+    this.currWord = "";
+    this.displayWord();
   },
-};
 
-  hangman.newWord();
-  mysteryWordHtml.textContent = hangman.wordBlank.join(" ");
+  gameOver: function(){
+    if(this.guessWrong < 1){
+      alert("You Lost");
+      this.newGame();
+      this.displayWord();
+    };
+  },
+
+};
+  
+  hangman.displayWord();
+  //mysteryWordHtml.textContent = hangman.wordBlank.join(" ");
   livesHtml.textContent = hangman.guessWrong;
   lettersGuessedHtml.textContent = hangman.wrongList;
   
@@ -92,19 +91,18 @@ var hangman = {
     var input = event.key;
   
     if(input.match(/[a-z]/i) && input.length === 1){ 
-      if(hangman.currWord.includes(input)){
-        hangman.replaceLet(input);
-        console.log("replaceLet " + hangman.wordBlank);
-      }
-    
-      else if(!hangman.currWord.includes(input)){
-        hangman.wrongLet(input);
-        console.log("wrongLet " + hangman.wrongList);
-      };
-    
+      hangman.guessLetter(input);
+      hangman.gameOver();
     };
 
   };
 
-  newGameButton.addEventListener('click', hangman.newGame);
-  newGameButton.addEventListener('click', hangman.newWord);
+// hangman.guessLetter("m");
+console.log("wordList: " + hangman.wordList);
+console.log("guessWrong: " + hangman.guessWrong);
+console.log("wordBlank: " + hangman.wordBlank);
+console.log("wrongList: " + hangman.wrongList);
+console.log("count: " + hangman.count);
+console.log("randWord: " + hangman.randWord);
+console.log("newWord: " + hangman.newWord);
+console.log("currWord: " + hangman.currWord);
