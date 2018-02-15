@@ -66,6 +66,10 @@ var hangman = {
       mysteryWordHtml.textContent = this.wordBlank.join(" ");
     };
     
+    //catch all for extra letters
+    //if(!this.wrongList)
+
+
     //if length of current word equals amount of letters swapped, word is complete
     if(this.currWord.length === this.isRight){
       this.isComplete = true;
