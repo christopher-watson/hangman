@@ -23,6 +23,8 @@ var hangman = {
   randWord: [""],
   newWord: [""],
   currWord: [""],
+  isComplete: false,
+  isRight: 0,
 
   
 
@@ -39,6 +41,8 @@ var hangman = {
   },
 
   guessLetter: function(a){
+    //if the current word does not include the input letter "a", add it to a list of wrong letters
+    //display list of wrong letters without commas, if input letter is not already in list
     if(!this.currWord.includes(a)){
       if(!this.wrongList.includes(a)){
         this.wrongList.splice(this.count, 1, a);
@@ -50,17 +54,32 @@ var hangman = {
       };
     };
 
-    if(this.randWord.includes(a)){
+    //if the current word includes the input letter, swap the _ with the input letter
+    //if letter was swapped, add 1 to isRight counter
+    if(this.currWord.includes(a)){
       for(var i = 0; i < this.currWord.length; i++){
-        if (this.randWord[i] === a){
+        if ((this.currWord[i] === a) && (!this.wordBlank[i].includes(this.currWord[i]))){
           this.wordBlank.splice(i, 1, a);
+          this.isRight++;
         };
       };
       mysteryWordHtml.textContent = this.wordBlank.join(" ");
     };
+    
+    //if length of current word equals amount of letters swapped, word is complete
+    if(this.currWord.length === this.isRight){
+      this.isComplete = true;
+    };
+
+    console.log("guessLetter - wordBlank: " + this.wordBlank);
+    console.log("guessLetter - currWord: " + this.currWord);
+    console.log("guessLetter - currWordLength: " + this.currWord.length);
+    console.log("guessLetter - isComplete: " + this.isComplete);
+    console.log("guessLetter - isRight: " + this.isRight);
   },
 
   newGame: function(){
+    //reset game
     this.wordList = ["chaos", "robot", "house", "thehideout", "kindajazzy", "melodica"];
     this.guessWrong = 10;
     this.wordBlank = [""];
@@ -68,24 +87,37 @@ var hangman = {
     this.count = 0;
     this.randWord = [""];
     this.newWord = [""];
-    this.currWord = "";
+    this.currWord = [""];
     this.displayWord();
     livesHtml.textContent = hangman.guessWrong;
     lettersGuessedHtml.textContent = hangman.wrongList;
   },
 
   gameOver: function(){
+    //if you guessed 10 times, you lose
     if(this.guessWrong < 1){
-      alert("You Lost");
-      this.newGame();
-      // this.displayWord();
+      setTimeout(function() { alert("You Lost"); }, 500);
+      setTimeout(function() {
+        if(confirm("Would you like to play again?")){
+          this.newGame();
+        };
+      }, 550);      
+    };
+
+    if (this.isComplete){
+      //if word is complete, you win
+      setTimeout(function() { alert("You Won!"); }, 500);
+      setTimeout(function() {
+        if(confirm("Would you like to play again?")){
+          this.newGame();
+        };
+      }, 550);      
     };
   },
 
 };
   
   hangman.displayWord();
-  //mysteryWordHtml.textContent = hangman.wordBlank.join(" ");
   livesHtml.textContent = hangman.guessWrong;
   lettersGuessedHtml.textContent = hangman.wrongList;
   
@@ -101,7 +133,6 @@ var hangman = {
 
   };
 
-// hangman.guessLetter("m");
 console.log("wordList: " + hangman.wordList);
 console.log("guessWrong: " + hangman.guessWrong);
 console.log("wordBlank: " + hangman.wordBlank);
@@ -110,3 +141,6 @@ console.log("count: " + hangman.count);
 console.log("randWord: " + hangman.randWord);
 console.log("newWord: " + hangman.newWord);
 console.log("currWord: " + hangman.currWord);
+console.log("currWordLength: " + hangman.currWord.length);
+console.log("isComplete: " + hangman.isComplete);
+console.log("isRight: " + hangman.isRight);
