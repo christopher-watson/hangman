@@ -40,12 +40,14 @@ var hangman = {
 
   guessLetter: function(a){
     if(!this.currWord.includes(a)){
-      this.wrongList.splice(this.count, 1, a);
-      this.count++; //keeps counter of wrongLetter array index
-      lettersGuessedHtml.textContent = this.wrongList.join(" ");
-      this.guessWrong--;
-      livesHtml.textContent = this.guessWrong;
-      console.log("guessLetter - guessWrong: " + this.guessWrong);
+      if(!this.wrongList.includes(a)){
+        this.wrongList.splice(this.count, 1, a);
+        this.count++; //keeps counter of wrongLetter array index
+        lettersGuessedHtml.textContent = this.wrongList.join(" ");
+        this.guessWrong--;
+        livesHtml.textContent = this.guessWrong;
+        console.log("guessLetter - guessWrong: " + this.guessWrong);
+      };
     };
 
     if(this.randWord.includes(a)){
@@ -68,13 +70,15 @@ var hangman = {
     this.newWord = [""];
     this.currWord = "";
     this.displayWord();
+    livesHtml.textContent = hangman.guessWrong;
+    lettersGuessedHtml.textContent = hangman.wrongList;
   },
 
   gameOver: function(){
     if(this.guessWrong < 1){
       alert("You Lost");
       this.newGame();
-      this.displayWord();
+      // this.displayWord();
     };
   },
 
