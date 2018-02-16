@@ -16,11 +16,11 @@ var hangman = {
   newWord: [""],
   currWord: [""],
   isComplete: false,
+  win: false,
   isRight: 0,
   this: [],
 
   
-
   displayWord: function(){
     //choose a word from list and display it on the screen
     this.randWord = this.wordList[Math.floor(Math.random() * this.wordList.length)];
@@ -71,6 +71,12 @@ var hangman = {
     // console.log("guessLetter - isRight: " + this.isRight);
   },
 
+  // didWin: function(){
+  //   if(this.win){
+  //     if (this.currWord === )
+  //   };
+  // },
+
   newGame: function(){
     //reset game
     hangman.wordList = ["chaos", "robot", "house", "thehideout", "kindajazzy", "melodica"];
@@ -90,54 +96,49 @@ var hangman = {
 
   gameOver: function(){
     //if you guessed 10 times, you lose
-    // if(this.guessWrong < 1){
-    //   setTimeout(function() { alert("You Lost"); }, 450);
-    //   setTimeout(function() {
-    //     if(confirm("Would you like to play again?")){
-    //       hangman.newGame();
-    //     };
-    //   }, 500);      
-    // };
-    
     if(this.guessWrong < 1){
       $.confirm({
-        title: 'Confirm!',
-        content: 'Simple confirm!',
+        title: 'You Lose',
+        content: 'Would you like to play again?',
         buttons: {
-            confirm: function () {
-                $.alert('Confirmed!');
-            },
-            cancel: function () {
-                $.alert('Canceled!');
-            },
-            somethingElse: {
-                text: 'Something else',
-                btnClass: 'btn-blue',
-                keys: ['enter', 'shift'],
-                action: function(){
-                    $.alert('Something else?');
-                }
-            }
+          somethingElse: {
+              text: 'Yes',
+              btnClass: 'btn-green',
+              action: function(){
+                  $.alert('Great!');
+                  hangman.newGame();
+              }
+          },
+          cancel: function () {
+            // $.alert('Ok');
+          }
         }
       });
-    }
-
-
-
-
-
-
-
-    if (this.isComplete){
-      //if word is complete, you win
-      setTimeout(function() { alert("You Won!"); }, 450);
-      setTimeout(function() {
-        if(confirm("Would you like to play again?")){
-          hangman.newGame();
-        };
-      }, 500);      
     };
-  },
+
+    //if word is complete, you win
+    if (this.isComplete){
+      this.win = true;
+      $.confirm({
+        title: 'You Win!',
+        content: 'Would you like to play again?',
+        buttons: {
+          somethingElse: {
+              text: 'Yes',
+              btnClass: 'btn-green',
+              action: function(){
+                  $.alert('Great!');
+                  hangman.newGame();
+              }
+          },
+          cancel: function () {
+            // $.alert('Ok');
+          }
+        }
+      });
+    };
+
+  }
 
 };
   
