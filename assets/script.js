@@ -25,6 +25,7 @@ var hangman = {
   currWord: [""],
   isComplete: false,
   isRight: 0,
+  this: [],
 
   
 
@@ -67,7 +68,13 @@ var hangman = {
     };
     
     //catch all for extra letters
-    //if(!this.wrongList)
+    // for(var i = 0; i < this.currWord.length; i++){
+
+    // }
+    //   if ( ((this.currWord.includes(a)) && (this.wordBlank[i].includes(this.currWord[i])) ) || ( (!this.currWord.includes(a)) && (this.wrongList.includes(a)) ) ){
+    //     this.this.push(a);
+    //     console.log("guessLetter - thisArray: " + this.this);
+    //   };
 
 
     //if length of current word equals amount of letters swapped, word is complete
@@ -84,15 +91,17 @@ var hangman = {
 
   newGame: function(){
     //reset game
-    this.wordList = ["chaos", "robot", "house", "thehideout", "kindajazzy", "melodica"];
-    this.guessWrong = 10;
-    this.wordBlank = [""];
-    this.wrongList = ["-"];
-    this.count = 0;
-    this.randWord = [""];
-    this.newWord = [""];
-    this.currWord = [""];
-    this.displayWord();
+    hangman.wordList = ["chaos", "robot", "house", "thehideout", "kindajazzy", "melodica"];
+    hangman.guessWrong = 10;
+    hangman.wordBlank = [""];
+    hangman.wrongList = ["-"];
+    hangman.count = 0;
+    hangman.randWord = [""];
+    hangman.newWord = [""];
+    hangman.currWord = [""];
+    hangman.isComplete = false;
+    hangman.isRight = 0;
+    hangman.displayWord();
     livesHtml.textContent = hangman.guessWrong;
     lettersGuessedHtml.textContent = hangman.wrongList;
   },
@@ -103,7 +112,7 @@ var hangman = {
       setTimeout(function() { alert("You Lost"); }, 500);
       setTimeout(function() {
         if(confirm("Would you like to play again?")){
-          this.newGame();
+          hangman.newGame();
         };
       }, 550);      
     };
@@ -113,7 +122,7 @@ var hangman = {
       setTimeout(function() { alert("You Won!"); }, 500);
       setTimeout(function() {
         if(confirm("Would you like to play again?")){
-          this.newGame();
+          hangman.newGame();
         };
       }, 550);      
     };
@@ -137,6 +146,8 @@ var hangman = {
 
   };
 
+newGameButton.addEventListener('click', hangman.newGame);
+
 console.log("wordList: " + hangman.wordList);
 console.log("guessWrong: " + hangman.guessWrong);
 console.log("wordBlank: " + hangman.wordBlank);
@@ -148,3 +159,4 @@ console.log("currWord: " + hangman.currWord);
 console.log("currWordLength: " + hangman.currWord.length);
 console.log("isComplete: " + hangman.isComplete);
 console.log("isRight: " + hangman.isRight);
+console.log("thisArray: " + hangman.this);
