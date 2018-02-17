@@ -105,7 +105,6 @@ var hangman = {
               text: 'Yes',
               btnClass: 'btn-green',
               action: function(){
-                  $.alert('Great!');
                   hangman.newGame();
               }
           },
@@ -127,7 +126,6 @@ var hangman = {
               text: 'Yes',
               btnClass: 'btn-green',
               action: function(){
-                  $.alert('Great!');
                   hangman.newGame();
               }
           },
